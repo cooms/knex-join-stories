@@ -7,8 +7,12 @@
   <body>
     {{#each data}}
     {{name}}
+    <a href="/delete?wom_id={{id}}"><button>delete</button></a>
     <br>
     {{/each}}
+    <br>
+    <a href="/outfit"><button>Outfits</button></a>
+    <a href="/trash"><button>Rubbish</button></a>
     <br>
     Add a womble:
     <form action="/newWomble" method="post">
@@ -25,5 +29,26 @@
       </select>
       <input type="submit">
     </form>
+
+    Mod a womble:
+    <form action="/update" method="put">
+      <select name="name">
+        {{#each data}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}}
+      </select>
+      <select name="characteristic">
+        {{#each data}}
+        <option value="{{characteristic_id}}">{{outfit}}</option>
+        {{/each}}
+      </select>
+      <select name="rubbish">
+        {{#each data}}
+        <option value="{{rubbish_id}}">{{trash}}</option>
+        {{/each}}
+      </select>
+      <input type="submit">
+    </form>
+
   </body>
 </html>

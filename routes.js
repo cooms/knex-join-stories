@@ -1,32 +1,22 @@
-// var development = require('./knexfile').development
-// var knex = require('knex')(development)
 var db = require('./data/db')
 
 module.exports = {
   getOutfits: getOutfits,
   getDuties: getDuties,
   newWomble: newWomble,
-  getAll: getAll
+  getAll: getAll,
+  delWomble: delWomble,
+  updateWom: updateWom
 }
 
-// function getWombles (req, res) {
-//   db.getWombles()
-//   .then(sendWombles)
-//   .catch(sendError)
-//
-//   function sendWombles (data) {
-//     res.render('home', {data:data})
-//   }
-//
-//   function sendError (err) {
-//     console.error(err.message)
-//     res.status(500).send("Couldn't show you the users!")
-//   }
-// }
+function getAll (req, res) {
+  db.getAll()
+  .then(sendAll)
+  .catch(sendError)
 
-function sendError (err) {
-  console.error(err.message)
-  res.status(500).send("NO")
+  function sendAll(data) {
+    res.render('home', {data:data})
+  }
 }
 
 function getOutfits (req, res) {
@@ -37,11 +27,6 @@ function getOutfits (req, res) {
   function sendOutfits(data) {
     res.render('outfit', {data: data})
   }
-
-  // function sendError (err) {
-  //   console.error(err.message)
-  //   res.status(500).send("NO")
-  // }
 }
 
 function getDuties (req, res) {
@@ -52,13 +37,7 @@ function getDuties (req, res) {
     function sendDuties(data) {
       res.render('trash', {data:data})
     }
-
-    // function sendError (err) {
-    //   console.error(err.message)
-    //   res.status(500).send("NO")
-    // }
 }
-
 
 function newWomble (req, res) {
   var wombleDetails = {
@@ -73,17 +52,24 @@ function newWomble (req, res) {
   .catch(console.error)
 }
 
-function getAll (req, res) {
-  db.getAll()
-  .then(sendAll)
+function delWomble (req, res) {
+  var womId = req.query.wom_id
+  db.delWomble(womId)
+  .then(function (wombles) {
+    res.redirect('/')
+  })
   .catch(sendError)
+}
 
-  function sendAll(data) {
-    res.render('home', {data:data})
-  }
+function updateWom (req, res) {
+  db.updateWom()
+  .then(function (wombles) {
+    res.redirect('/')
+  })
+  .catch(sendError)
+}
 
-  // function sendError (err) {
-  //   console.error(err.message)
-  //   res.status(500).send("NO")
-  // }
+function sendError (err) {
+  console.error(err.message)
+  res.status(500).send("NO")
 }

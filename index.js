@@ -27,6 +27,13 @@ app.get('/trash', routes.getDuties)
 // Add a new womble
 app.post('/newWomble', routes.newWomble)
 
+// Delete womble
+app.get('/delete', routes.delWomble)
+
+// Update womble
+app.get('/update', routes.updateWom)
+
+
 
 
 var PORT = 3000

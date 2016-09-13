@@ -6,13 +6,15 @@ module.exports = {
   getOutfits: getOutfits,
   getDuties: getDuties,
   newWomble: newWomble,
+  delWomble: delWomble,
+  updateWom: updateWom
 }
 
 function getAll () {
   return knex('wombles')
   .join('characteristics', 'wombles.characteristic_id', '=', 'characteristics.id')
   .join('rubbish', 'wombles.rubbish_id', '=', 'rubbish.id')
-  .select('wombles.name', 'rubbish.name as trash', 'characteristics.description as outfit', 'characteristic_id', 'rubbish_id')
+  .select('wombles.id as id', 'wombles.name', 'rubbish.name as trash', 'characteristics.description as outfit', 'characteristic_id', 'rubbish_id')
 }
 
 function getOutfits () {
@@ -30,5 +32,21 @@ function getDuties () {
 function newWomble (data) {
   return knex('wombles')
   .insert({name: data.name, characteristic_id: data.characteristic, rubbish_id: data.rubbish})
+  .catch(console.error)
+}
+
+function delWomble (womId) {
+  return knex('wombles')
+  .where('id', '=', womId)
+  .del()
+  .catch(console.error)
+}
+
+function updateWom () {
+  return knex('wombles')
+  .where('id', '=', 5)
+  .update({
+    characteristic_id: '1'
+  })
   .catch(console.error)
 }
