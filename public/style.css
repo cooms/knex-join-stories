@@ -1,1 +1,7 @@
 /* styling */
+table {
+  width: 200px;
+}
+td {
+  width: 100px;
+}

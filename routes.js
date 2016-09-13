@@ -62,8 +62,12 @@ function delWomble (req, res) {
 }
 
 function updateWom (req, res) {
-  db.updateWom()
-  .then(function (wombles) {
+  var wombleDetails = {
+    id: req.body.id,
+    characteristic: req.body.characteristic
+  }
+  db.updateWom(wombleDetails)
+  .then(function (data) {
     res.redirect('/')
   })
   .catch(sendError)

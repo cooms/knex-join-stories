@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded())
 app.engine('hbs', hbs())
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname + '/views'))
-app.set('public', path.join(__dirname + '/public'))
+app.use(express.static(path.join(__dirname, 'public')))
 
 
 // List all wombles
@@ -31,7 +31,7 @@ app.post('/newWomble', routes.newWomble)
 app.get('/delete', routes.delWomble)
 
 // Update womble
-app.get('/update', routes.updateWom)
+app.post('/update', routes.updateWom)
 
 
 

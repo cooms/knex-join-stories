@@ -42,11 +42,11 @@ function delWomble (womId) {
   .catch(console.error)
 }
 
-function updateWom () {
+function updateWom (data) {
   return knex('wombles')
-  .where('id', '=', 5)
+  .where('id', '=', data.id)
   .update({
-    characteristic_id: '1'
+    characteristic_id: data.characteristic
   })
   .catch(console.error)
 }
