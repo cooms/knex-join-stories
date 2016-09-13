@@ -11,9 +11,34 @@ app.engine('hbs', hbs())
 app.set('view engine', 'hbs')
 app.set('views', __dirname + 'views')
 
+
+// List all wombles
 app.get('/', function (req, res) {
-  res.send('WOMBLES!')
+  knex('wombles')
+  .select('name')
+  .then(function (data) {
+    console.log(data.map(function (womble) {
+      return womble.name
+    }))
+  })
+  .catch(console.error)
 })
+
+
+
+// List rubbish duties
+app.get('/rubbishDuties', function (req, res) {
+  knex('wombles')
+  .join('rubbish', 'wombles.rubbish_id', '=', 'rubbish.id')
+  .select('wombles.name', 'rubbish.name as trash')
+  .then( function (data) {
+    console.log(data)
+    })
+  })
+
+
+
+
 
 var PORT = 3000
 
