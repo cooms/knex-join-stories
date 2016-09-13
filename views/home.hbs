@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wombles</title>
+  </head>
+  <body>
+    {{#each data}}
+    {{name}}
+    <br>
+    {{/each}}
+    <br>
+    Add a womble:
+    <form action="/newWomble" method="post">
+      <input name="name" placeholder="womble name">
+      <select name="characteristic">
+        {{#each data}}
+        <option value="{{characteristic_id}}">{{outfit}}</option>
+        {{/each}}
+      </select>
+      <select name="rubbish">
+        {{#each data}}
+        <option value="{{rubbish_id}}">{{trash}}</option>
+        {{/each}}
+      </select>
+      <input type="submit">
+    </form>
+  </body>
+</html>

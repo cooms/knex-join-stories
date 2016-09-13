@@ -3,40 +3,29 @@ var development = require('./knexfile').development
 var knex = require('knex')(development)
 var bodyParser = require('body-parser')
 var hbs = require('express-handlebars')
+var path = require('path')
+var routes = require('./routes')
 
 var app = express()
 
 app.use(bodyParser.urlencoded())
 app.engine('hbs', hbs())
 app.set('view engine', 'hbs')
-app.set('views', __dirname + 'views')
+app.set('views', path.join(__dirname + '/views'))
+app.set('public', path.join(__dirname + '/public'))
 
 
 // List all wombles
-app.get('/', function (req, res) {
-  knex('wombles')
-  .select('name')
-  .then(function (data) {
-    console.log(data.map(function (womble) {
-      return womble.name
-    }))
-  })
-  .catch(console.error)
-})
+app.get('/', routes.getAll)
 
-
+// List wombles with their characteristics
+app.get('/outfit', routes.getOutfits)
 
 // List rubbish duties
-app.get('/rubbishDuties', function (req, res) {
-  knex('wombles')
-  .join('rubbish', 'wombles.rubbish_id', '=', 'rubbish.id')
-  .select('wombles.name', 'rubbish.name as trash')
-  .then( function (data) {
-    console.log(data)
-    })
-  })
+app.get('/trash', routes.getDuties)
 
-
+// Add a new womble
+app.post('/newWomble', routes.newWomble)
 
 
 
